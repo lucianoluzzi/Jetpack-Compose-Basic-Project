@@ -3,14 +3,12 @@ package com.example.composebasicsetuptest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.composebasicsetuptest.ui.screens.NavigationDestination
+import com.example.composebasicsetuptest.ui.screens.login.LoginFormScreen
 import com.example.composebasicsetuptest.ui.theme.ComposeBasicSetupTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,74 +23,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun App() {
     ComposeBasicSetupTestTheme {
-        Scaffold(
-            topBar = { TopBar() }
-        ) { innerPadding ->
-            Form(modifier = Modifier.padding(innerPadding))
-        }
+        Navigation()
     }
 }
 
 @Composable
-private fun TopBar(modifier: Modifier = Modifier) {
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Text("Layouts codelab")
-        }
-    )
-}
-
-@Composable
-private fun Form(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .fillMaxHeight()
+private fun Navigation() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = NavigationDestination.LoginForm.route
     ) {
-        Email(Modifier.fillMaxWidth())
-        Spacer(Modifier.width(8.dp))
-        Password(Modifier.fillMaxWidth())
-        Box(modifier = Modifier.fillMaxHeight()) {
-            Button(
-                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
-                onClick = { /*TODO*/ }
-            ) {
-                Text("Login")
-            }
+        composable(route = NavigationDestination.LoginForm.route) {
+            LoginFormScreen()
         }
     }
-}
-
-@Composable
-private fun Email(modifier: Modifier = Modifier) {
-    var email by rememberSaveable { mutableStateOf("") }
-    OutlinedTextField(
-        modifier = modifier,
-        value = email,
-        onValueChange = {
-            email = it
-        },
-        label = { Text("Email") }
-    )
-}
-
-@Composable
-private fun Password(modifier: Modifier = Modifier) {
-    var password by rememberSaveable { mutableStateOf("") }
-    OutlinedTextField(
-        modifier = modifier,
-        value = password,
-        onValueChange = {
-            password = it
-        },
-        label = { Text("Password") }
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun FormPreview() {
-    App()
 }
