@@ -11,18 +11,21 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.composebasicsetuptest.R
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composebasicsetuptest.domain.model.Muscle
 import com.example.composebasicsetuptest.ui.theme.ComposeBasicSetupTestTheme
 
 @ExperimentalFoundationApi
 @Composable
-fun DashboardScreen(modifier: Modifier = Modifier) {
+fun DashboardScreen(
+    modifier: Modifier = Modifier,
+) {
     Scaffold { innerPadding ->
         Dashboard(modifier = modifier.padding(innerPadding))
     }
@@ -30,7 +33,11 @@ fun DashboardScreen(modifier: Modifier = Modifier) {
 
 @ExperimentalFoundationApi
 @Composable
-private fun Dashboard(modifier: Modifier = Modifier) {
+private fun Dashboard(
+    modifier: Modifier = Modifier,
+    viewModel: DashboardViewModel = hiltViewModel()
+) {
+    val muscles = viewModel.muscles.collectAsState().value
     Column(
         modifier = modifier
             .padding(8.dp)
@@ -38,18 +45,7 @@ private fun Dashboard(modifier: Modifier = Modifier) {
             .fillMaxHeight()
     ) {
         MuscleDashboard(
-            muscles = listOf(
-                Muscle(
-                    name = "Biceps",
-                    iconResource = R.drawable.icon_biceps
-                ),
-                Muscle("Triceps"),
-                Muscle("Forearms"),
-                Muscle("Shoulders"),
-                Muscle("Front Deltoid"),
-                Muscle("Lateral Deltoid"),
-                Muscle("Posterial Deltoid"),
-            )
+            muscles = muscles
         )
     }
 }

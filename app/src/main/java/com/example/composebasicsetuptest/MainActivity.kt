@@ -11,8 +11,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.composebasicsetuptest.ui.screens.NavigationDestination
 import com.example.composebasicsetuptest.ui.screens.dashboard.DashboardScreen
 import com.example.composebasicsetuptest.ui.theme.ComposeBasicSetupTestTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalFoundationApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
