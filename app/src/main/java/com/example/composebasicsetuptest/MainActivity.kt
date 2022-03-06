@@ -3,14 +3,16 @@ package com.example.composebasicsetuptest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composebasicsetuptest.ui.screens.NavigationDestination
-import com.example.composebasicsetuptest.ui.screens.login.LoginFormScreen
+import com.example.composebasicsetuptest.ui.screens.dashboard.DashboardScreen
 import com.example.composebasicsetuptest.ui.theme.ComposeBasicSetupTestTheme
 
+@ExperimentalFoundationApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +22,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 private fun App() {
     ComposeBasicSetupTestTheme {
@@ -27,6 +30,7 @@ private fun App() {
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 private fun Navigation() {
     val navController = rememberNavController()
@@ -35,7 +39,7 @@ private fun Navigation() {
         startDestination = NavigationDestination.LoginForm.route
     ) {
         composable(route = NavigationDestination.LoginForm.route) {
-            LoginFormScreen()
+            DashboardScreen()
         }
     }
 }
